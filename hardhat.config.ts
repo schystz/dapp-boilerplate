@@ -2,6 +2,7 @@ require('dotenv').config()
 
 import { HardhatUserConfig } from 'hardhat/types'
 import '@nomiclabs/hardhat-waffle'
+import 'hardhat-typechain'
 
 const INFURA_PROJECT_ID = process.env.INFURA_PROJECT_ID || ''
 const ROPSTEN_PRIVATE_KEY = process.env.ROPSTEN_PRIVATE_KEY || ''

@@ -1,10 +1,10 @@
 import { ethers } from 'hardhat'
 import { expect } from 'chai'
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signer-with-address'
-import { Contract } from 'ethers'
+import { Token } from '../typechain/Token'
 
 describe('Token contract', () => {
-  let hardhatToken: Contract
+  let hardhatToken: Token
   let owner: SignerWithAddress
   let addr1: SignerWithAddress
   let addr2: SignerWithAddress
@@ -12,7 +12,7 @@ describe('Token contract', () => {
   beforeEach(async () => {
     const factory = await ethers.getContractFactory('Token')
     ;[owner, addr1, addr2] = await ethers.getSigners()
-    hardhatToken = await factory.deploy()
+    hardhatToken = (await factory.deploy()) as Token
   })
 
   describe('Deployment', () => {
@@ -56,7 +56,7 @@ describe('Token contract', () => {
       await hardhatToken.transfer(addr2.address, 50)
 
       const finalOwnerBalance = await hardhatToken.balanceOf(owner.address)
-      expect(finalOwnerBalance).to.equal(initialOwnerBalance - 150)
+      expect(finalOwnerBalance).to.equal(initialOwnerBalance.toNumber() - 150)
 
       const addr1Balance = await hardhatToken.balanceOf(addr1.address)
       expect(addr1Balance).to.equal(100)
